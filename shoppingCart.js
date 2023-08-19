@@ -1,14 +1,6 @@
-//-----things to do in the shopping cart
-//add items 2.ok
-//remove items
-//show/hide the cart on click 1.ok
-//show hide cart when it has no items , or goes from 0 to 1
-//get sum of items
-//save items /load saved items
 import items from "./items.json";
 import formatCurrency from "./util/formatCurrency";
 import addGlobalEventListener from "./util/addGlobalEventListener";
-// import { json } from "stream/consumers";
 
 const cartButton = document.querySelector("[data-cart-button]");
 const cartWrapper = document.querySelector("[data-cart-items-wrapper]");
@@ -19,13 +11,12 @@ const cartItemContainer = document.querySelector("[data-cart-items-container]");
 const cartQuantity = document.querySelector("[data-cart-quantity]");
 const cartTotal = document.querySelector("[data-cart-total]");
 const cart = document.querySelector("[data-cart]");
-const deleteFromCart = document.querySelector("[data-remove-from-cart-button]");
 const SESSION_STORAGE_KEY = `SHOPPING_CART-cart`;
 
 export function setupShoppingCart() {
   addGlobalEventListener("click", "[data-remove-from-cart-button]", (e) => {
-    const idOfItem = e.target.closest("[data-item]").dataset.ItemID;
-    removeFromCart(parseInt(idOfItem));
+    const idOfItem = parseInt(e.target.closest("[data-item]").dataset.ItemID);
+    removeFromCart(idOfItem);
   });
   shoppingCart = loadCart();
   renderCart();
@@ -36,13 +27,16 @@ export function setupShoppingCart() {
   });
 }
 
+//save items
 function saveCart() {
   sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(shoppingCart));
 }
+//load saved items
 function loadCart() {
   const cart = sessionStorage.getItem(SESSION_STORAGE_KEY);
-  return JSON.parse(cart || []);
+  return JSON.parse(cart) || [];
 }
+
 //add items to the cart
 //handle multiple of the same item in the cart
 //get sum of items
@@ -58,24 +52,25 @@ export function addItemToCart(id) {
   saveCart();
 }
 
+//function to remove an item from the cart
 function removeFromCart(id) {
   const existingItem = shoppingCart.find((entry) => entry.id === id);
-  if (existingItem === null) return;
+  console.log(existingItem.quantity);
+  if (existingItem == null) return;
 
-  shoppingCart = shoppingCart.filter((entry) => {
-    entry.id !== id;
-  });
+  shoppingCart = shoppingCart.filter((entry) => entry.id !== id);
   renderCart();
   saveCart();
 }
 
+//show hide cart when it has no items , or goes from 0 to 1
 function renderCart() {
   if (shoppingCart.length === 0) {
     hideCart();
   } else {
     showCart();
+    renderCartItems();
   }
-  renderCartItems();
 }
 
 function hideCart() {
@@ -88,17 +83,17 @@ function showCart() {
 }
 
 function renderCartItems() {
-  cartItemContainer.innerHTML = "";
-
   cartQuantity.innerHTML = shoppingCart.length; //changing quantity items of cart
 
-  //getting total value of items on cart
+  //getting total value/sum of items on cart
   const totalCents = shoppingCart.reduce((sum, entry) => {
     const item = items.find((i) => entry.id === i.id);
     return sum + item.priceCents * entry.quantity; //whathever return here will be added to "sum" and then do the next loop until items are over
   }, 0);
 
   cartTotal.innerText = formatCurrency(totalCents);
+
+  cartItemContainer.innerHTML = "";
 
   shoppingCart.forEach((entry) => {
     const item = items.find((i) => entry.id === i.id);

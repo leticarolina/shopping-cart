@@ -4,11 +4,11 @@ import { addItemToCart } from "./shoppingCart";
 import addGlobalEventListener from "./util/addGlobalEventListener";
 
 const storeItemTemplate = document.querySelector("#store-item-template");
-const catalogue = document.querySelector("[data-store-container]");
+const catalog = document.querySelector("[data-store-container]");
 const IMAGE_URL = "https://dummyimage.com/420x260";
 
 export function setupStore() {
-  if (catalogue == null) return;
+  if (catalog == null) return;
   addGlobalEventListener("click", "[data-add-to-cart-button]", (e) => {
     const idOfItem = e.target.closest("[data-store-item]").dataset.ItemID;
     addItemToCart(parseInt(idOfItem));
@@ -35,5 +35,5 @@ function renderStoreItem(item) {
   //setting price, Intl stand for international has features to set currencies, translating
   const price = storeItem.querySelector("[data-price]");
   price.innerHTML = formatCurrency(item.priceCents);
-  catalogue.appendChild(storeItem);
+  catalog.appendChild(storeItem);
 }
