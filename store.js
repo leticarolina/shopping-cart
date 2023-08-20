@@ -10,29 +10,29 @@ const IMAGE_URL = "https://dummyimage.com/420x260";
 export function setupStore() {
   if (catalog == null) return;
   addGlobalEventListener("click", "[data-add-to-cart-button]", (e) => {
-    const idOfItem = e.target.closest("[data-store-item]").dataset.ItemID;
+    const idOfItem = e.target.closest("[data-store-item]").dataset.ItemID; //setting data-Item-ID to html
     addItemToCart(parseInt(idOfItem));
   });
   items.forEach(renderStoreItem);
 }
 
 //populating the store item with the items.json database file
-//1.created a template for each item of the store with all place holder needed a store item
+//1.created a html template for each item of the store with all place holder needed the store item
 function renderStoreItem(item) {
-  //acessing the html inside template created
+  //2.acessing the html inside template created
   const storeItem = storeItemTemplate.content.cloneNode(true);
-  //selecting the container of the item and adding an ID to it
+  //3.selecting the container of the item and adding an ID to it
   const ContainerID = storeItem.querySelector("[data-store-item]");
   ContainerID.dataset.ItemID = item.id;
-  //selecting name,category html data elements to relate to the item.json file
+  //4.selecting name,category html data elements to relate to the item.json file
   const name = storeItem.querySelector("[data-name]");
   name.innerHTML = item.name;
   const category = storeItem.querySelector("[data-category]");
   category.innerHTML = item.category;
-  //selecting image html, setting the src="" of the image item.imagecolor from item.json object and IMAGE_URL as pre saving from html url
+  //5.selecting image html, setting the src="" of the image item.imagecolor from item.json object and IMAGE_URL as pre saving from html url
   const image = storeItem.querySelector("[data-image]");
   image.src = `${IMAGE_URL}/${item.imageColor}/${item.imageColor}`;
-  //setting price, Intl stand for international has features to set currencies, translating
+  //6.setting price, imported formatCurrency from separate file inside util folder
   const price = storeItem.querySelector("[data-price]");
   price.innerHTML = formatCurrency(item.priceCents);
   catalog.appendChild(storeItem);

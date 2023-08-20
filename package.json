@@ -4,8 +4,8 @@
   "description": "",
   "main": "script.js",
   "scripts": {
-    "start": "parcel index.html team.html store.html ",
-    "build": "parcel build index.html team.html store.html"
+    "start": "parcel ./index.html ./team.html ./store.html ",
+    "build": "parcel build ./index.html ./team.html ./store.html  --no-optimize --public-url"
   },
   "keywords": [],
   "author": "",
