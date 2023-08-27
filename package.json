@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "script.js",
+  "type": "module",
   "scripts": {
     "start": "parcel ./index.html ./team.html ./store.html ",
     "build": "parcel build ./index.html ./team.html ./store.html  --no-optimize --public-url"
@@ -17,3 +18,4 @@
     "stream": "^0.0.2"
   }
 }
+
