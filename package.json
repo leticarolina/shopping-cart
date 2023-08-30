@@ -1,22 +1,19 @@
 {
   "name": "shopping-cart",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "start": "parcel ./index.html ./team.html ./store.html ",
-    "build": "parcel build ./index.html ./team.html ./store.html  --no-optimize --public-url"
+    "start": "parcel index.html team.html store.html ",
+    "build": "parcel build index.html team.html store.html"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "parcel-bundler": "^1.12.5", "gh-pages": "3.2.1"
-  },
-  "dependencies": {
-    "stream": "^0.0.2"
+    "parcel-bundler": "^1.12.5", 
+    "gh-pages": "3.2.1"
   }
 }
 
